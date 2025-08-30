@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($senha, $usuario['senha'])) {
             session_start();
             $_SESSION['usuario'] = $usuario['nome'];
-            header("Location: index.php");
+            header("Location: site/index.php");
             exit;
         } else {
             echo "Senha incorreta!";
