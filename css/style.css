@@ -1,0 +1,285 @@
+.navbar.bg-body-tertiary {
+  background-color: #f05757!important; /* Cor de fundo do menu */
+}
+
+.offcanvas.offcanvas-end.show {
+  background-color: #f05757!important; /* Cor de fundo do menu */
+}
+
+.dropdown-menu.show{
+  background-color: #f05757!important; /* Cor de fundo do menu */
+}
+
+.dropdown-item:hover{
+  background-color: #e47474!important; /* Cor de fundo do menu */
+}
+
+.logo{
+  width: 6%;
+}
+
+.logo2{
+  width: 31%;
+}
+
+.container {
+    text-align: center; /* Centraliza o texto dentro do contêiner */
+}
+
+.card-container {
+    display: flex; /* Usar flexbox para alinhar os cards */
+    flex-wrap: wrap; /* Permite que os cards se movam para a próxima linha se não houver espaço */
+    justify-content: center; /* Centraliza os cards horizontalmente */
+    padding: 20px; /* Espaçamento interno do contêiner */
+}
+
+.card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 300px;
+    overflow: hidden;
+
+    /* NOVOS: */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 150px;         /* NOVO: altura fixa */
+    object-fit: cover;     /* NOVO: mantém proporção sem distorcer */
+}
+
+.card-body {
+    padding: 15px;
+
+    /* NOVOS: */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-body .container {
+    margin-top: auto;
+}
+
+.card-text {
+    margin-bottom: 10px;
+    /* height: 50px; */         /* Comentado ou removido */
+    /* overflow: hidden; */     /* Comentado ou removido */
+    /* text-overflow: ellipsis; */ /* Comentado ou removido */
+}
+
+.card-price {
+    font-size: 20px; /* Tamanho da fonte do preço */
+    color: #333; /* Cor do texto do preço */
+    margin: 10px 0; /* Margem acima e abaixo do preço */
+}
+
+.whatsapp-button {
+    display: inline-flex; /* Permite alinhar o ícone e o texto */
+    align-items: center; /* Centraliza verticalmente o ícone e o texto */
+    padding: 10px 15px; /* Espaçamento interno */
+    background-color: #f05757; /* Cor do WhatsApp */
+    color: white; /* Cor do texto */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove o sublinhado */
+    transition: background-color 0.3s, transform 0.3s; /* Transições suaves */
+}
+
+.whatsapp-button i {
+    margin-right: 5px; /* Espaço entre o ícone e o texto */
+}
+
+.whatsapp-button:hover {
+    background-color: #e47474; /* Cor mais escura ao passar o mouse */
+    transform: scale(1.05); /* Aumenta ligeiramente o botão */
+}
+
+.footer {
+    margin-top: auto; /* Empurra o footer para o final da página */
+    background-color: #f05757; /* Cor de fundo do footer */
+    text-align: center; /* Centraliza o conteúdo */
+    padding: 20px; /* Espaçamento interno */
+}
+
+.footer-content {
+    display: flex; /* Usar flexbox para alinhar o texto e o ícone */
+    flex-direction: column; /* Alinha o texto e o ícone verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+}
+
+.whatsapp-icon {
+    color: white; /* Cor do ícone */
+    font-size: 40px; /* Tamanho do ícone */
+    text-decoration: none; /* Remove o sublinhado */
+    margin-top: 10px; /* Espaço acima do ícone */
+    transition: transform 0.3s; /* Transição suave para o efeito de hover */
+}
+
+.whatsapp-icon:hover {
+    transform: scale(1.1); /* Aumenta o ícone ao passar o mouse */
+}
+
+.container2 {
+    max-width: 600px;
+    margin: 80px auto; /* Centraliza e dá respiro no topo e rodapé */
+    background: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container2 h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.imagem-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.imagem-ampliada {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  animation: zoomIn 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+.fechar-imagem {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 35px;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: background 0.3s, color 0.3s;
+}
+
+.fechar-imagem:hover {
+  background: rgba(255, 255, 255, 0.7);
+  color: #000;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mapa-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 30px auto;
+  max-width: 900px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.mapa-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.botao {
+    width: 100%;
+    padding: 12px;
+    background-color: #f05757;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.botao:hover {
+    background-color: #e47474;
+    transform: scale(1.03);
+}
+
+button:hover{
+  background-color: #e47474;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif !important; /* Aplica a fonte ao corpo do site */
+}
+
+main{
+  h2{
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .logo{
+    width: 25%;
+  }
+}
