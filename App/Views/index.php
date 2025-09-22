@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leila Pães e Salgados</title>
-    <link rel="stylesheet" href="/teste/public/css/style.css?v=3">
+    <link rel="stylesheet" href="/teste/public/css/style.css?v=4">
     <link rel="stylesheet" href="/teste/public/css/aos.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -12,8 +12,31 @@
 </head>
 <body>
     <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid d-flex justify-content-between">
-            <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            <!-- Perfil à esquerda -->
+            <div class="dropdown">
+                <a href="#" class="btn btn-light dropdown-toggle perfil-btn" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle fa-2x"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <?php if (isset($_SESSION['usuario'])): ?>
+                        <li class="dropdown-item">
+                            👋 Olá, <b><?php echo htmlspecialchars($_SESSION['usuario']['nome']); ?></b>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.php?rota=logout"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                    <?php else: ?>
+                        <li><a class="dropdown-item" href="index.php?rota=login"><i class="fas fa-sign-in-alt"></i> Entrar</a></li>
+                        <li><a class="dropdown-item" href="index.php?rota=cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+
+            <!-- Logo centralizada -->
+            <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="Logo">
+
+            <!-- Carrinho à direita -->
             <a href="index.php?rota=carrinho" class="btn btn-primary">
                 <i class="fas fa-shopping-cart"></i> Ver Carrinho
             </a>
@@ -27,7 +50,7 @@
 
         <div class="card-container">
             <?php if (!empty($produtos)): ?>
-                <?php foreach ($produtos as $index => $produto): ?>
+                <?php foreach ($produtos as $produto): ?>
                     <div class="card" data-aos="flip-left">
                         <img src="<?php echo $produto->getImagemUrl(); ?>" 
                              class="card-img-top" 

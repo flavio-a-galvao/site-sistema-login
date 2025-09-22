@@ -286,6 +286,25 @@ main{
     border-radius: 10px;
 }
 
+.perfil-btn {
+  background: transparent !important;
+  border: none !important;
+  color: white !important;
+  font-size: 22px;
+}
+
+.perfil-btn:hover {
+  color: #ddd !important;
+}
+
+.navbar .logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8%; /* ajuste do tamanho da logo */
+}
+
+
 
 @media screen and (max-width: 768px) {
   .logo{
