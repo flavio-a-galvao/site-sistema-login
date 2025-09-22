@@ -1,8 +1,3 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,42 +11,17 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 🔹 Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <!-- Logo -->
-            <a href="index.php?rota=home">
-                <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="Logo" height="50">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between">
+            <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="">
+            <a href="index.php?rota=carrinho" class="btn btn-primary">
+                <i class="fas fa-shopping-cart"></i> Ver Carrinho
             </a>
-
-            <!-- Links -->
-            <div>
-                <a href="index.php?rota=home" class="btn btn-link text-white">🏠 Home</a>
-                <a href="index.php?rota=pedidos" class="btn btn-link text-white">📦 Pedidos</a>
-                <a href="index.php?rota=carrinho" class="btn btn-primary">
-                    <i class="fas fa-shopping-cart"></i> Carrinho
-                </a>
-            </div>
-
-            <!-- Login / Logout -->
-            <div>
-                <?php if (!empty($_SESSION['usuario'])): ?>
-                    <span class="text-white me-2">
-                        👋 Olá, <strong><?= htmlspecialchars($_SESSION['usuario']['nome']) ?></strong>
-                    </span>
-                    <a href="index.php?rota=logout" class="btn btn-danger">🚪 Sair</a>
-                <?php else: ?>
-                    <a href="index.php?rota=login" class="btn btn-success">🔑 Login</a>
-                    <a href="index.php?rota=cadastro" class="btn btn-warning">📝 Cadastro</a>
-                <?php endif; ?>
-            </div>
         </div>
     </nav>
 
-    <!-- 🔹 Conteúdo principal -->
     <main>
-        <img class="wallpaper" src="/projeto-teste/public/imagens/wallpaper2.jpg" 
-             alt="Descrição da imagem" width="100%">
+        <img class="wallpaper" src="/projeto-teste/public/imagens/wallpaper2.jpg" alt="Descrição da imagem" width="100%">
 
         <h2 class="text-center my-4" data-aos="flip-left">Nosso Cardápio</h2>
 
@@ -59,16 +29,16 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php if (!empty($produtos)): ?>
                 <?php foreach ($produtos as $index => $produto): ?>
                     <div class="card" data-aos="flip-left">
-                        <img src="<?= $produto->getImagemUrl(); ?>" 
+                        <img src="<?php echo $produto->getImagemUrl(); ?>" 
                              class="card-img-top" 
-                             alt="<?= htmlspecialchars($produto->nome); ?>">
+                             alt="<?php echo htmlspecialchars($produto->nome); ?>">
                         <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($produto->nome); ?></h5>
-                            <p class="card-text"><?= htmlspecialchars($produto->descricao); ?></p>
-                            <p class="card-price">R$ <?= number_format($produto->preco, 2, ',', '.'); ?></p>
+                            <h5 class="card-title"><?php echo htmlspecialchars($produto->nome); ?></h5>
+                            <p class="card-text"><?php echo htmlspecialchars($produto->descricao); ?></p>
+                            <p class="card-price">R$ <?php echo number_format($produto->preco, 2, ',', '.'); ?></p>
                             <form method="POST" action="index.php?rota=adicionarCarrinho">
-                                <input type="hidden" name="produto" value="<?= htmlspecialchars($produto->nome); ?>">
-                                <input type="hidden" name="preco" value="<?= $produto->preco; ?>">
+                                <input type="hidden" name="produto" value="<?php echo htmlspecialchars($produto->nome); ?>">
+                                <input type="hidden" name="preco" value="<?php echo $produto->preco; ?>">
                                 <button type="submit" class="btn btn-success w-100">
                                     <i class="fas fa-cart-plus"></i> Adicionar ao carrinho
                                 </button>
@@ -82,17 +52,15 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </main>
 
-    <!-- 🔹 Rodapé -->
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; <?= date("Y") ?> Leila Pães e Salgados. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Leila Pães e Salgados. Todos os direitos reservados.</p>
             <a href="https://wa.me/5544998086959" class="whatsapp-icon" target="_blank">
                 <i class="fab fa-whatsapp"></i>
             </a>
         </div>
     </footer>
 
-    <!-- 🔹 Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="/projeto-teste/public/js/jquery-1.11.3.min.js"></script>
     <script src="/projeto-teste/public/js/aos.js"></script>
