@@ -1,29 +1,26 @@
 <?php
-namespace Config;
+namespace App\Config;
 
 use PDO;
 use PDOException;
 
-class Database
-{
+class Database {
     private static $instance = null;
 
-    public static function getConnection()
-    {
+    public static function getConnection() {
         if (self::$instance === null) {
-            $host = "localhost";   // 🔧 seu host
-            $dbname = "seu_banco"; // 🔧 nome do banco
-            $user = "root";        // 🔧 usuário
-            $pass = "";            // 🔧 senha
-
             try {
-                self::$instance = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+                $host = "localhost";
+                $dbname = "sistema_login";
+                $username = "root";
+                $password = "";
+
+                self::$instance = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
                 self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                die("Erro de conexão: " . $e->getMessage());
+                die("Erro ao conectar: " . $e->getMessage());
             }
         }
-
         return self::$instance;
     }
 }
