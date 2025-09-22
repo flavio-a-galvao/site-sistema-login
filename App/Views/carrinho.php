@@ -10,107 +10,59 @@ $carrinho = $_SESSION['carrinho'] ?? [];
     <meta charset="UTF-8">
     <title>Meu Carrinho - Leila Pães e Salgados</title>
 
+    <link rel="stylesheet" href="/teste/public/css/style.css?v=5">
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font Awesome (garante os ícones) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS inline para garantir que seja aplicado imediatamente -->
     <style>
-        /* Container do card */
-        .card {
-            border-radius: 10px;
+        .logo {
+            width: 12%; /* maior que nas outras telas */
         }
-        .card img {
-            max-height: 180px;
-            object-fit: cover;
-        }
-
-        /* ===== Botões circulares (quantidade/remover) ===== */
-        .card .btn-circle {
-            width: 56px !important;
-            height: 56px !important;
-            border-radius: 50% !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 0 !important;
-            border: none !important;
-            cursor: pointer !important;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.18) !important;
-            transition: transform 0.14s ease, opacity 0.14s ease !important;
-            background: #999 !important; /* fallback */
-            color: #fff !important;
-            font-size: 0 !important; /* reset, icone controla o tamanho */
-        }
-
-        .card .btn-circle i {
-            font-size: 22px !important;   /* garante ícone grande */
-            line-height: 1 !important;
-            pointer-events: none !important;
-            color: #fff !important;       /* default branco */
-        }
-
-        .card .btn-circle:hover {
-            transform: scale(1.08) !important;
-        }
-
-        /* cores específicas (forçando com !important) */
-        .card .btn-inc { background-color: #28a745 !important; } /* verde */
-        .card .btn-dec { background-color: #ffc107 !important; } /* amarelo */
-        .card .btn-del { background-color: #dc3545 !important; } /* vermelho */
-
-        /* ícone do botão dec (amarelo) deve ficar escuro para contraste */
-        .card .btn-dec i { color: #111 !important; }
-
-        /* ===== Botões principais ===== */
-        .actions-footer {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-main {
-            padding: 12px 26px !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            border-radius: 10px !important;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
-            transition: transform 0.14s ease !important;
-        }
-
-        .btn-main:hover {
-            transform: translateY(-3px) !important;
-        }
-
-        /* Ajustes de responsividade */
         @media (max-width: 768px) {
-            .card img { max-height: 140px; }
-            .card .btn-circle { width: 48px !important; height: 48px !important; }
-            .card .btn-circle i { font-size: 20px !important; }
-            .btn-main { padding: 10px 18px !important; font-size: 15px !important; }
-        }
-
-        /* centraliza bem o total e a área de ações */
-        .cart-total {
-            margin-top: 22px;
-            text-align: center;
+            .logo { width: 40%; }
         }
     </style>
 </head>
 <body>
+
 <nav class="navbar bg-danger">
-    <div class="container-fluid">
-        <a href="index.php?rota=home" class="btn btn-secondary btn-main">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- Perfil à esquerda -->
+        <div class="dropdown">
+            <a href="#" class="btn btn-light dropdown-toggle perfil-btn" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle fa-2x"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <?php if (isset($_SESSION['usuario'])): ?>
+                    <li class="dropdown-item">
+                        👋 Olá, <b><?php echo htmlspecialchars($_SESSION['usuario']['nome']); ?></b>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="index.php?rota=logout"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <?php else: ?>
+                    <li><a class="dropdown-item" href="index.php?rota=login"><i class="fas fa-sign-in-alt"></i> Entrar</a></li>
+                    <li><a class="dropdown-item" href="index.php?rota=cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+
+        <!-- Logo centralizada -->
+        <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="Logo" style="height:120px; width:auto;">
+
+
+
+        <!-- Botão Voltar à direita -->
+        <a href="index.php?rota=home" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Voltar
         </a>
-        <h5 class="m-0 text-white">Carrinho</h5>
     </div>
 </nav>
+
 
 <main class="container my-4">
     <?php if (empty($carrinho)): ?>
@@ -128,7 +80,7 @@ $carrinho = $_SESSION['carrinho'] ?? [];
 
                     $subtotal = $preco * $qtd;
                     $total += $subtotal;
-                    // Ajuste de path de imagem: mantenha conforme seu projeto
+
                     $imagemUrl = $imagem ? '/projeto-teste/public/imagens/' . $imagem : '/projeto-teste/public/imagens/logo.png';
                 ?>
                 <div class="col-md-4">
@@ -199,7 +151,6 @@ $carrinho = $_SESSION['carrinho'] ?? [];
     </div>
 </main>
 
-<!-- Bootstrap JS (opcional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

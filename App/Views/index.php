@@ -34,7 +34,8 @@
             </div>
 
             <!-- Logo centralizada -->
-            <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="Logo">
+            <img class="logo" src="/projeto-teste/public/imagens/logo.png" alt="Logo" style="height:120px; width:auto;">
+
 
             <!-- Carrinho à direita -->
             <a href="index.php?rota=carrinho" class="btn btn-primary">
