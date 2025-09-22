@@ -1,10 +1,12 @@
 <?php
 require __DIR__ . '/../app/Controllers/ProdutoController.php';
 require __DIR__ . '/../app/Controllers/CarrinhoController.php';
+require __DIR__ . '/../app/Controllers/LoginController.php'; // 👈 novo
 require __DIR__ . '/../app/Models/Produto.php';
 
 use App\Controllers\ProdutoController;
 use App\Controllers\CarrinhoController;
+use App\Controllers\LoginController;
 
 $rota = $_GET['rota'] ?? 'home';
 
@@ -49,9 +51,25 @@ switch ($rota) {
         $controller->refazerPedido();
         break;
 
-    case 'removerPedido':   // ✅ rota adicionada
+    case 'removerPedido':
         $controller = new CarrinhoController();
         $controller->removerPedido();
+        break;
+
+    // 🔑 novas rotas de login/cadastro/logout
+    case 'login':
+        $controller = new LoginController();
+        $controller->login();
+        break;
+
+    case 'cadastro':
+        $controller = new LoginController();
+        $controller->cadastro();
+        break;
+
+    case 'logout':
+        $controller = new LoginController();
+        $controller->logout();
         break;
 
     default:

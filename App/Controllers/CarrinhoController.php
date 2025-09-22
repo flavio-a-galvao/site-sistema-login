@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Produto;
+use Config\Database;
 
 class CarrinhoController
 {
@@ -10,21 +11,21 @@ class CarrinhoController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+    }
 
-        // 🚀 Limpa pedidos antigos sem 'id'
-        if (!empty($_SESSION['pedidos'])) {
-            foreach ($_SESSION['pedidos'] as $idx => $p) {
-                if (empty($p['id'])) {
-                    unset($_SESSION['pedidos'][$idx]);
-                }
-            }
-            $_SESSION['pedidos'] = array_values($_SESSION['pedidos']); // reindexa
+    // ✅ Verifica se usuário está logado
+    private function verificarLogin()
+    {
+        if (empty($_SESSION['usuario'])) {
+            header('Location: index.php?rota=login');
+            exit;
         }
     }
 
     // Exibe carrinho
     public function index()
     {
+        $this->verificarLogin();
         $carrinho = $_SESSION['carrinho'] ?? [];
         require __DIR__ . '/../Views/carrinho.php';
     }
@@ -32,6 +33,8 @@ class CarrinhoController
     // Adiciona produto ao carrinho
     public function adicionar()
     {
+        $this->verificarLogin();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: index.php?rota=home');
             exit;
@@ -77,6 +80,8 @@ class CarrinhoController
     // Remove produto do carrinho
     public function remover()
     {
+        $this->verificarLogin();
+
         $produto = $_POST['produto'] ?? $_GET['produto'] ?? null;
 
         if ($produto && isset($_SESSION['carrinho'][$produto])) {
@@ -90,6 +95,8 @@ class CarrinhoController
     // Altera quantidade
     public function alterarQuantidade()
     {
+        $this->verificarLogin();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: index.php?rota=carrinho');
             exit;
@@ -116,6 +123,8 @@ class CarrinhoController
     // Finaliza pedido
     public function finalizarPedido()
     {
+        $this->verificarLogin();
+
         if (empty($_SESSION['carrinho'])) {
             header('Location: index.php?rota=carrinho');
             exit;
@@ -128,15 +137,14 @@ class CarrinhoController
 
         $_SESSION['pedidos'] ??= [];
 
-        // 🔑 sempre salva com ID único
-        $pedido = [
-            'id'    => uniqid('pedido_', true),
-            'itens' => $_SESSION['carrinho'],
-            'data'  => date('d/m/Y H:i:s'),
-            'total' => $total
+        // 🔑 pedido agora tem usuario_id
+        $_SESSION['pedidos'][] = [
+            'id'         => uniqid('pedido_', true),
+            'usuario_id' => $_SESSION['usuario']['id'],
+            'itens'      => $_SESSION['carrinho'],
+            'data'       => date('d/m/Y H:i:s'),
+            'total'      => $total
         ];
-
-        $_SESSION['pedidos'][] = $pedido;
 
         $_SESSION['carrinho'] = []; // limpa carrinho
 
@@ -144,16 +152,25 @@ class CarrinhoController
         exit;
     }
 
-    // Lista pedidos
+    // Lista pedidos do usuário logado
     public function pedidos()
     {
-        $pedidos = $_SESSION['pedidos'] ?? [];
+        $this->verificarLogin();
+
+        $todosPedidos = $_SESSION['pedidos'] ?? [];
+        $usuarioId = $_SESSION['usuario']['id'];
+
+        // Filtra apenas os pedidos do usuário logado
+        $pedidos = array_filter($todosPedidos, fn($p) => $p['usuario_id'] === $usuarioId);
+
         require __DIR__ . '/../Views/pedidos.php';
     }
 
-    // Refazer pedido: joga pro carrinho e remove do histórico
+    // Refazer pedido
     public function refazerPedido()
     {
+        $this->verificarLogin();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: index.php?rota=pedidos');
             exit;
@@ -166,7 +183,7 @@ class CarrinhoController
         }
 
         foreach ($_SESSION['pedidos'] ?? [] as $idx => $p) {
-            if (!empty($p['id']) && $p['id'] === $pedido_id) {
+            if (!empty($p['id']) && $p['id'] === $pedido_id && $p['usuario_id'] === $_SESSION['usuario']['id']) {
                 $_SESSION['carrinho'] = $p['itens'];
                 unset($_SESSION['pedidos'][$idx]);
                 $_SESSION['pedidos'] = array_values($_SESSION['pedidos']);
@@ -178,9 +195,11 @@ class CarrinhoController
         exit;
     }
 
-    // Remove pedido do histórico
+    // Remove pedido
     public function removerPedido()
     {
+        $this->verificarLogin();
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: index.php?rota=pedidos');
             exit;
@@ -193,7 +212,7 @@ class CarrinhoController
         }
 
         foreach ($_SESSION['pedidos'] ?? [] as $idx => $p) {
-            if (!empty($p['id']) && $p['id'] === $pedido_id) {
+            if (!empty($p['id']) && $p['id'] === $pedido_id && $p['usuario_id'] === $_SESSION['usuario']['id']) {
                 unset($_SESSION['pedidos'][$idx]);
                 $_SESSION['pedidos'] = array_values($_SESSION['pedidos']);
                 break;
